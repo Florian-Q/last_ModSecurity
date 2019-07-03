@@ -23,6 +23,7 @@ RUN OFFICIAL_DEPO="https://github.com/SpiderLabs/ModSecurity.git" \
 		libgeoip-dev         \
 	    curl 				 \
 	    tar 				 \
+	&& apt-get clean && rm -rf /var/lib/apt/lists/* \
 	# get last number version of tag "refs/tags/vX.X.X"
 	&& LAST_VERSION=$(git ls-remote --tags $OFFICIAL_DEPO | \
 		grep -o '[0-9]\+\.[0-9]\+\.[0-9]$' | \
@@ -39,4 +40,5 @@ RUN OFFICIAL_DEPO="https://github.com/SpiderLabs/ModSecurity.git" \
     && ./build.sh \
     && ./configure \
     && make \
-    && make install
+    && make install \
+    && strip /usr/local/modsecurity/bin/* /usr/local/modsecurity/lib/*.a /usr/local/modsecurity/lib/*.so*
