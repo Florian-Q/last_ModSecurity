@@ -7,20 +7,12 @@ WORKDIR /tmp/modsecurity
 
 RUN OFFICIAL_DEPO="https://github.com/SpiderLabs/ModSecurity.git" \
 	&& apt-get update && apt-get install -y --no-install-recommends --no-install-suggests \
+	g++ flex bison curl doxygen libyajl-dev libgeoip-dev libtool dh-autoreconf libcurl4-gnutls-dev libxml2 libpcre++-dev libxml2-dev \
 		ca-certificates 	 \
 		automake             \
 		autoconf             \
 		build-essential      \
-		libcurl4-openssl-dev \
-		libpcre++-dev        \
-		libtool              \
-		libxml2-dev          \
-		libyajl-dev          \
-		lua5.2-dev           \
 		git                  \
-		pkgconf              \
-		ssdeep               \
-		libgeoip-dev         \
 	    curl 				 \
 	    tar 				 \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/* \
@@ -36,6 +28,8 @@ RUN OFFICIAL_DEPO="https://github.com/SpiderLabs/ModSecurity.git" \
 	# compile 
 	&& cd $PATH_MODSEC_EXTRACT \
     && ./build.sh \
+    && git submodule init \
+    && git submodule update \
     && ./configure \
     && make \
     && make install \
