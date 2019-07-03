@@ -27,6 +27,7 @@ RUN OFFICIAL_DEPO="https://github.com/SpiderLabs/ModSecurity.git" \
 	&& mv "ModSecurity-$LAST_VERSION" $PATH_MODSEC_EXTRACT \
 	# compile 
 	&& cd $PATH_MODSEC_EXTRACT \
+	&& git init \
     && ./build.sh \
     && git submodule init \
     && git submodule update \
