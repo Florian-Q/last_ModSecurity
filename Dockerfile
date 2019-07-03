@@ -24,13 +24,14 @@ RUN OFFICIAL_DEPO="https://github.com/SpiderLabs/ModSecurity.git" \
 	# Download and extract
 	&& curl -s https://codeload.github.com/SpiderLabs/ModSecurity/tar.gz/v${LAST_VERSION} --output modsec.tar.gz \
 	&& tar -zxf modsec.tar.gz \
-	&& mv "ModSecurity-$LAST_VERSION" $PATH_MODSEC_EXTRACT \
+	&& mv "ModSecurity-$LAST_VERSION" ${PATH_MODSEC_EXTRACT} \
 	# compile 
-	&& cd $PATH_MODSEC_EXTRACT \
+	&& cd ${PATH_MODSEC_EXTRACT} \
 	&& git init \
-    && ./build.sh \
-    && git submodule init \
+	&& git submodule add ${OFFICIAL_DEPO} \
+	&& git submodule init \
     && git submodule update \
+    && ./build.sh \
     && ./configure \
     && make \
     && make install \
